@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace ChatMeeting.Core.Domain.Interfaces.Services
 {
-    public interface IAuthService
+    public interface IChatService
     {
-        Task<AuthDto> GetToken(LoginDto loginModel);
-        Task RegisterUser(RegisterUserDto registerUser);
+        Task<ChatDto> GetPaginatedChat(string chatName, int pageNumber, int pageSize);
     }
 }

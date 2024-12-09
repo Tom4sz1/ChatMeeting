@@ -16,5 +16,18 @@ namespace ChatMeeting.Core.Domain
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<Message> Messages { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Message>().HasOne(x => x.Chat).WithMany(x => x.Messages).HasForeignKey(m => m.ChatId);
+
+            modelBuilder.Entity<Message>().HasOne(x => x.Sender).WithMany(x => x.Messages).HasForeignKey(m => m.SenderId);
+
+            modelBuilder.Entity<Chat>().HasData(
+                new Chat { ChatId = Guid.NewGuid(), Name = "Global", CreatedAt =  DateTime.Now }
+                );
+        }
     }
 }
